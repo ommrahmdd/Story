@@ -1,0 +1,39 @@
+.createPlaylist {
+  background-color: var(--bgColor);
+  min-height: 100vh;
+  max-height: auto;
+}
+
+.createPlaylist___header {
+  font-size: 5rem;
+  font-weight: 300;
+  color: var(--yellowColor);
+  text-transform: capitalize;
+  margin-bottom: 3rem;
+}
+.createPlaylist__form label {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--yellowColor);
+  font-weight: 300;
+}
+.createPlaylist__form input {
+  margin-bottom: 3rem;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  background-color: transparent;
+  border-color: var(--yellowColor);
+  box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.447);
+  transition: all 0.3s ease;
+  color: var(--yellowColor);
+}
+.createPlaylist__form input:focus {
+  background-color: var(--yellowColor);
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+.createPlaylist__error {
+  color: var(--yellowColor);
+  font-size: 1.5rem;
+  display: block;
+}

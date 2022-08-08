@@ -1,0 +1,69 @@
+.createPlaylist {
+  background-color: var(--bgColor);
+  min-height: 100vh;
+  max-height: auto;
+}
+
+.createPlaylist___header {
+  font-size: 5rem;
+  font-weight: 300;
+  color: var(--yellowColor);
+  text-transform: capitalize;
+  margin: 5rem 0;
+  margin-bottom: 6rem;
+}
+.createPlaylist__form label {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--yellowColor);
+  font-weight: 300;
+}
+.createPlaylist__form input {
+  margin-bottom: 3rem;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  background-color: transparent;
+  border-color: var(--yellowColor);
+  box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.447);
+  transition: all 0.3s ease;
+  color: var(--yellowColor);
+}
+.createPlaylist__form input:focus {
+  background-color: var(--yellowColor);
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+.createPlaylist__error {
+  color: var(--yellowColor);
+  font-size: 1.5rem;
+  display: block;
+}
+.createPlaylist__form textarea {
+  background-color: transparent;
+  border-color: var(--yellowColor);
+  min-height: 10rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.6rem;
+  color: var(--yellowColor);
+  transition: all 0.3s ease;
+}
+.createPlaylist__form textarea:focus {
+  background-color: var(--yellowColor);
+  color: var(--bgColor);
+  box-shadow: none;
+  border-color: var(--yellowColor);
+}
+.createPlaylist__form select {
+  display: block;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  background-color: transparent;
+  border-color: var(--yellowColor);
+  border-radius: 1rem;
+  appearance: none;
+  color: var(--yellowColor);
+}
+.createPlaylist__form select:focus {
+  border-color: var(--yellowColor) !important;
+  box-shadow: none !important;
+}

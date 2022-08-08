@@ -1,0 +1,50 @@
+.home {
+  min-height: 100vh;
+  max-height: auto;
+  background-color: var(--bgColor-light);
+  /* padding: 5rem 0; */
+}
+.customCard {
+  background-color: var(--yellowColor);
+  color: var(--bgColor);
+  border-radius: 0.5rem;
+  padding: 1rem 0rem;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0.8rem 0.3rem 3rem rgba(0, 0, 0, 0.327);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.customCard:hover {
+  opacity: 0.6;
+}
+.customCard img {
+  height: 15rem !important;
+  width: 15rem !important;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 3rem !important;
+  margin: 2.5rem 0;
+}
+.customCard .customCard__name {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+.customCard__number {
+  position: absolute;
+  font-size: 6rem;
+  right: 3%;
+  bottom: 5%;
+  font-weight: 900;
+  opacity: 0.1;
+  z-index: 0;
+}
+.customCard span {
+  font-size: 1.6rem;
+  font-weight: 400;
+  opacity: 0.8;
+}

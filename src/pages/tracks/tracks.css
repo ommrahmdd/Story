@@ -1,0 +1,86 @@
+.tracks {
+  background-color: var(--bgColor);
+  min-height: 100vh;
+  max-height: auto;
+}
+.tracks__name,
+.tracks__right h3 {
+  margin: 4rem 0;
+  color: var(--yellowColor);
+  font-size: 3rem;
+  font-weight: 800;
+}
+.tracks__name span {
+  font-weight: 300;
+}
+.tracks__currentAudio {
+  background-color: var(--yellowColor);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+.tracks__currentAudio h4 {
+  font-size: 2.1rem;
+  color: var(--bgColor);
+}
+.tracks__currentAudio-audio {
+  margin: 2rem;
+}
+.tracks__currentAudio h6 {
+  color: var(--bgColor);
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.tracks__currentAudio p {
+  color: var(--bgColor);
+  font-weight: 600;
+  width: 50%;
+  margin-left: 2rem;
+}
+.tracks__currentAudio-customAudio .controls i {
+  font-size: 2.5rem;
+  color: var(--bgColor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tracks__currentAudio-customAudio .controls i:nth-child(2) {
+  font-size: 4rem;
+}
+.tracks__currentAudio-customAudio .controls i:hover {
+  opacity: 0.8;
+}
+.tracks__right h3 {
+  font-weight: 300;
+}
+.progress-bar {
+  background-color: var(--bgColor) !important;
+}
+.progress {
+  cursor: pointer !important;
+}
+.tracks__right-track {
+  padding: 2.2rem 1.5rem;
+  box-shadow: 0.4rem 0.3rem 0.6rem rgba(0, 0, 0, 0.43);
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.tracks__right-track:hover {
+  box-shadow: none;
+}
+.tracks__right-track i {
+  color: var(--yellowColor);
+  font-size: 5rem;
+  margin: 0 1rem;
+  margin-right: 3rem;
+}
+.tracks__right-track div {
+  color: var(--yellowColor);
+}
+.tracks__right-track div h5 {
+  font-size: 1.6rem;
+}
+.tracks__right-track div p {
+  font-weight: 300;
+}
