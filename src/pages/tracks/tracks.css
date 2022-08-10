@@ -7,7 +7,7 @@
 .tracks__right h3 {
   margin: 4rem 0;
   color: var(--yellowColor);
-  font-size: 3rem;
+  font-size: 4.3rem;
   font-weight: 800;
 }
 .tracks__name span {
@@ -19,8 +19,10 @@
   border-radius: 0.5rem;
 }
 .tracks__currentAudio h4 {
-  font-size: 2.1rem;
+  font-size: 2.5rem;
   color: var(--bgColor);
+  margin: 1rem 0;
+  margin-bottom: 2rem;
 }
 .tracks__currentAudio-audio {
   margin: 2rem;
@@ -51,12 +53,14 @@
 }
 .tracks__right h3 {
   font-weight: 300;
+  font-size: 3rem;
 }
 .progress-bar {
   background-color: var(--bgColor) !important;
 }
 .progress {
   cursor: pointer !important;
+  height: 1.7rem !important;
 }
 .tracks__right-track {
   padding: 2.2rem 1.5rem;

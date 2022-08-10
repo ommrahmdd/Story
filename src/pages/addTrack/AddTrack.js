@@ -10,7 +10,10 @@ import { v4 } from "uuid";
 import "./addTrack.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase/config";
-
+//----------------------------------
+// TODO: reset formik
+// TODO: process state
+//-------------------------------------
 export default function AddTrack() {
   let [customTrack, setCustomTrack] = useState({});
   let [userPlaylists, setUserPlaylists] = useState([]);

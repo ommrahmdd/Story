@@ -1,10 +1,14 @@
+import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPlaylistById } from "../../firebase/playlists";
+import AddComment from "../../components/addComment/AddComment";
+import Comments from "../../components/comments/Comments";
+import { getPlaylistById, getTracksByID } from "../../firebase/playlists";
 import "./tracks.css";
 export default function Tracks() {
   let params = useParams().playlist_id;
   let [playlist, setPlaylist] = useState({});
+  let [tracks, setTracks] = useState([]);
   let [currentTrack, setCurrentTrack] = useState({});
   let [pausePlay, setPausePlay] = useState(true);
   let [audioProgress, setAudioProgress] = useState({});
@@ -22,9 +26,14 @@ export default function Tracks() {
 
   useEffect(() => {
     getPlaylistById(params).then((data) => {
-      console.log(data);
       setPlaylist(data);
-      setCurrentTrack(data.tracks[currentIndex]);
+      data.tracks.map((trackID) => {
+        getTracksByID(trackID).then((track, index) => {
+          setTracks((prevState) => {
+            return [...prevState, track];
+          });
+        });
+      });
     });
   }, []);
   let handlePausePlay = (e) => {
@@ -60,7 +69,8 @@ export default function Tracks() {
     });
   };
   let handleTrackClick = (e, index) => {
-    setCurrentTrack(playlist.tracks[index]);
+    setCurrentTrack(tracks[index]);
+    console.log(currentTrack);
     setAudioProgress({
       duration: 0,
       progress: 0,
@@ -69,12 +79,12 @@ export default function Tracks() {
     setCurrentIndex(index);
   };
   let handleForword = () => {
-    if (playlist.tracks[currentIndex + 1]) {
+    if (tracks[currentIndex + 1]) {
       setCurrentIndex((prevState) => prevState + 1);
-      setCurrentTrack(playlist.tracks[currentIndex + 1]);
+      setCurrentTrack(tracks[currentIndex + 1]);
     } else {
       setCurrentIndex(0);
-      setCurrentTrack(playlist.tracks[0]);
+      setCurrentTrack(tracks[0]);
     }
     setAudioProgress({
       duration: 0,
@@ -82,12 +92,12 @@ export default function Tracks() {
     });
   };
   let handleBackward = () => {
-    if (playlist.tracks[currentIndex - 1]) {
+    if (tracks[currentIndex - 1]) {
       setCurrentIndex((prevState) => prevState - 1);
-      setCurrentTrack(playlist.tracks[currentIndex - 1]);
+      setCurrentTrack(tracks[currentIndex - 1]);
     } else {
-      setCurrentIndex(playlist.tracks.length - 1);
-      setCurrentTrack(playlist.tracks[playlist.tracks.length - 1]);
+      setCurrentIndex(tracks.length - 1);
+      setCurrentTrack(tracks[tracks.length - 1]);
     }
     setAudioProgress({
       duration: 0,
@@ -105,9 +115,9 @@ export default function Tracks() {
               {playlist.name}&rdquo; <span>Playlist</span>
             </h2>
             <div className="tracks__currentAudio">
-              <h4>{currentTrack.name}</h4>
+              <h4>{currentTrack?.name}</h4>
               <audio
-                src={currentTrack.url}
+                src={currentTrack?.url}
                 className="tracks__currentAudio-audio"
                 ref={audioRef}
                 onTimeUpdate={handleAudoTimeChange}
@@ -131,8 +141,12 @@ export default function Tracks() {
                 </div>
                 {/* HANDLE: audio time */}
                 <div className="w-100 d-flex align-items-center justify-content-between">
-                  <span className="fs-4">{durCurrent}</span>
-                  <span className="fs-4">{durFull}</span>
+                  <span className="fs-4">
+                    {durCurrent != "aN:aN" ? durCurrent : "00:00"}
+                  </span>
+                  <span className="fs-4">
+                    {durFull != "aN:aN" ? durFull : "00:00"}
+                  </span>
                 </div>
                 {/* HANDLE: controls */}
                 <div className="controls w-25 d-flex align-items-center justify-content-around mt-2">
@@ -160,16 +174,18 @@ export default function Tracks() {
               </div>
               {/* HANDLE: description */}
               <div className="mt-5">
-                <h6>About {currentTrack.name}</h6>
-                <p>&ldquo;{currentTrack.description}&rdquo;</p>
+                <h6>About {currentTrack?.name}</h6>
+                <p>&ldquo;{currentTrack?.description}&rdquo;</p>
               </div>
             </div>
+            <Comments />
+            <AddComment />
           </div>
           {/* HANDLE: right section => More in playlist */}
           <div className="col-md-4 tracks__right d-flex flex-column align-items-center">
             <h3>More In Playlist</h3>
-            {playlist.tracks &&
-              playlist.tracks.map((track, index) => (
+            {tracks &&
+              tracks.map((track, index) => (
                 <div
                   className="d-flex align-items-center tracks__right-track w-75"
                   key={index}
