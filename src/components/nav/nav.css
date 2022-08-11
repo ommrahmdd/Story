@@ -2,6 +2,7 @@
   background-color: var(--yellowColor);
   padding: 2.5rem 0 !important;
   /* border-bottom: 1rem solid var(--yellowColor); */
+  position: relative;
 }
 .navbar-collapse {
   flex-grow: 0 !important;
@@ -70,4 +71,78 @@
 .nav__login-link:hover {
   background-color: var(--yellowColor);
   color: var(--bgColor);
+}
+
+.customNav .menu {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 15;
+  /* display: none;
+  top: -100vh; */
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: var(--bgColor);
+  display: block;
+  transition: all 0.4s ease;
+}
+.customNav .menu::-webkit-scrollbar {
+  display: none;
+}
+.customNav .menu i {
+  position: absolute !important;
+  font-size: 4rem;
+  color: white;
+  /* right: 20%; */
+  left: 90%;
+  top: 10%;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.customNav .menu i:hover {
+  transform: rotate(90deg);
+}
+.customNav .menu ul {
+  list-style: none;
+  text-align: center;
+  font-weight: lighter;
+}
+.customNav .menu ul li {
+  text-decoration: none;
+  cursor: pointer;
+}
+.customName__menu-link {
+  font-size: 4.6rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  color: white;
+  text-decoration: none;
+  text-transform: capitalize;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.1rem solid transparent;
+  transition: all 0.3s ease;
+}
+
+.customName__menu-link:hover {
+  border-bottom: 0.1rem solid var(--yellowColor);
+  color: var(--yellowColor);
+}
+
+.close-Menu {
+  top: -100vh !important;
+  display: none !important;
+}
+.customNav__menu-open {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  top: 0;
+  display: block;
+}
+.customNav__menu-open:hover {
+  transform: scale(1.2);
 }

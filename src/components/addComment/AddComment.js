@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../../firebase/config";
+import { addNewComment } from "../../firebase/playlists";
+import { getUserById } from "../../firebase/users";
 import "./addComment.css";
-export default function AddComment() {
+export default function AddComment(props) {
   let stars = new Array(5).fill(0);
   let [rate, setRate] = useState(0);
   let [rateHover, setRateHover] = useState(0);
   let [comment, setComment] = useState("");
+
+  let { trackId } = props;
+  let [currentUser, setCurrentUser] = useState({});
+  //HANDLE: use Effect
+  useEffect(() => {
+    getUserById(localStorage.getItem("uID")).then((user) => {
+      setCurrentUser(user);
+    });
+  }, []);
+
+  //HANDLE: click and hover events
   let handleRateClick = (index) => {
     setRate(index);
   };
@@ -13,7 +28,17 @@ export default function AddComment() {
   };
   let handleCommentChange = (e) => {
     setComment(e.target.value);
-    console.log(e.target.value);
+  };
+  let handleAddComment = () => {
+    addNewComment(trackId, {
+      rate,
+      comment,
+      userId: currentUser._id,
+      userName: currentUser.name,
+    }).then((data) => {
+      setComment("");
+      setRate(0);
+    });
   };
   return (
     <div className="addComment">
@@ -43,6 +68,12 @@ export default function AddComment() {
         value={comment}
         onChange={(e) => handleCommentChange(e)}
       />
+      <button
+        className="customBtn secondaryCustomBtn d-block mt-4"
+        onClick={handleAddComment}
+      >
+        Add
+      </button>
     </div>
   );
 }

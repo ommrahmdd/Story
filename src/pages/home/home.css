@@ -5,8 +5,8 @@
   /* padding: 5rem 0; */
 }
 .customCard {
-  background-color: var(--yellowColor);
-  color: var(--bgColor);
+  background-color: var(--bgColor);
+  color: var(--yellowColor);
   border-radius: 0.5rem;
   padding: 1rem 0rem;
   width: 80%;
@@ -22,12 +22,13 @@
   opacity: 0.6;
 }
 .customCard img {
-  height: 15rem !important;
-  width: 15rem !important;
+  height: 20rem !important;
+  width: 20rem !important;
   object-fit: contain;
   object-position: center;
-  border-radius: 3rem !important;
-  margin: 2.5rem 0;
+  /* border-radius: 3rem !important; */
+  margin: 2rem 0;
+  /* margin-top: 0; */
 }
 .customCard .customCard__name {
   font-size: 2rem;

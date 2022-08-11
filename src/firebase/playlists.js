@@ -3,6 +3,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  Firestore,
   getDoc,
   getDocs,
   query,
@@ -68,7 +69,10 @@ export let getTracksByID = async (track_id) => {
   let docRef = doc(db, "tracks", track_id);
   let trackRef = await getDoc(docRef);
   let track = trackRef.data();
-  return track;
+  return {
+    ...track,
+    track_ID: trackRef.id,
+  };
 };
 //HANDLE: Add Track to playlist
 export let addTrackToPlaylist = async (playlist_id, data) => {
@@ -87,9 +91,15 @@ export let addTrackToPlaylist = async (playlist_id, data) => {
 };
 
 //HANDLE: add new comment
-export let addNewComment = async (playlist_id, track_index, newComment) => {
-  let docRef = doc(db, "playlists", playlist_id);
+export let addNewComment = async (trackId, newComment) => {
+  let docRef = doc(db, "tracks", trackId);
   await updateDoc(docRef, {
-    // tracks:array
+    comments: arrayUnion({
+      rate: newComment.rate,
+      comment: newComment.comment,
+      userId: newComment.userId,
+      userName: newComment.userName,
+      createdAt: new Date().toLocaleString(),
+    }),
   });
 };

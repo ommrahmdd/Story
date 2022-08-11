@@ -37,19 +37,3 @@
   font-size: 1.5rem;
   display: block;
 }
-.signup__box {
-  margin-top: 1rem;
-}
-.signup__box p {
-  color: var(--yellowColor);
-  display: inline-block;
-}
-.signup__link span {
-  display: inline-block;
-}
-.signup__link {
-  font-size: 1.6rem;
-  margin-left: 1rem;
-  color: var(--yellowColor);
-  transition: all 0.3s ease;
-}

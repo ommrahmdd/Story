@@ -10,3 +10,28 @@
 .comments__stars i {
   font-size: 1.2rem;
 }
+.addComment__yellow {
+  color: var(--yellowColor);
+}
+.addComment__grey {
+  color: black;
+}
+.comments__commentBox {
+  margin: 1rem 0;
+}
+.comments__commentBox-name {
+  color: var(--yellowColor);
+  font-size: 1.6rem;
+  margin: 1rem 0;
+  font-weight: 300;
+}
+.comments__commentBox-comment {
+  width: 90%;
+  margin-left: 2rem;
+  color: white;
+}
+.comments__commentBox-time {
+  color: var(--yellowColor);
+  font-style: italic;
+  font-size: 1.3rem;
+}

@@ -1,11 +1,12 @@
 import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AddComment from "../../components/addComment/AddComment";
 import Comments from "../../components/comments/Comments";
 import { getPlaylistById, getTracksByID } from "../../firebase/playlists";
 import "./tracks.css";
 export default function Tracks() {
+  //TODO: hide add comment if current track is null
   let params = useParams().playlist_id;
   let [playlist, setPlaylist] = useState({});
   let [tracks, setTracks] = useState([]);
@@ -178,8 +179,16 @@ export default function Tracks() {
                 <p>&ldquo;{currentTrack?.description}&rdquo;</p>
               </div>
             </div>
-            <Comments />
-            <AddComment />
+            <Comments trackId={currentTrack?.track_ID} />
+            {localStorage.getItem("uID") ? (
+              <AddComment trackId={currentTrack?.track_ID} />
+            ) : (
+              <div className="d-flex justify-content-center align-items-center">
+                <Link to="/login" className="nav__login-link">
+                  <button className="customBtn ">Login</button>
+                </Link>
+              </div>
+            )}
           </div>
           {/* HANDLE: right section => More in playlist */}
           <div className="col-md-4 tracks__right d-flex flex-column align-items-center">
