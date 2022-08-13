@@ -1,0 +1,40 @@
+.footer {
+  background-color: var(--bgColor-dark);
+  color: var(--yellowColor);
+  padding: 8rem 0;
+}
+.footer__first span {
+  font-size: 6.5rem;
+  color: var(--yellowColor);
+  font-weight: 900;
+}
+.footer__second h5 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.footer__second ul {
+  list-style: none;
+}
+.footer__second ul li {
+  transition: all 0.3s ease;
+  margin-bottom: 0.6rem;
+}
+.footer__second ul li:hover {
+  transform: translateX(2rem);
+}
+
+.footer__link {
+  text-decoration: none;
+  font-size: 1.6rem;
+  color: var(--yellowColor);
+}
+
+.footer__link:hover {
+  color: var(--yellowColor);
+}
+.footer__second p {
+  font-size: 1.8rem;
+  font-weight: 600;
+}

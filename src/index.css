@@ -16,13 +16,15 @@ html {
 }
 body {
   font-family: "Mulish";
+  overflow-x: hidden !important;
 }
 :root {
   --bgColor: #292d58;
   --bgColor-light: #2d3261;
-  --yellowColor: #fbca56;
+  --bgColor-dark: #242746;
+  --yellowColor: #f2c8bf;
   --greenColor: #398579;
-  --pinkColor: #f2c8bf;
+  /* --pinkColor: #f2c8bf; */
 }
 p {
   font-size: 1.6rem;

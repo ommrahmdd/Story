@@ -23,7 +23,7 @@
   color: var(--yellowColor);
   font-size: 1.6rem;
   margin: 1rem 0;
-  font-weight: 300;
+  font-weight: 500;
 }
 .comments__commentBox-comment {
   width: 90%;

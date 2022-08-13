@@ -2,6 +2,7 @@
   background-color: var(--bgColor);
   min-height: 100vh;
   max-height: auto;
+  padding-bottom: 5rem;
 }
 .tracks__name,
 .tracks__right h3 {

@@ -69,78 +69,83 @@ export default function AddTrack() {
     });
   }, []);
   return (
-    <div className="d-flex flex-column align-items-center createPlaylist">
-      {/* <img src={require("./../../assest/bat-mid.png")} className=" my-5" /> */}
-      <h3 className="createPlaylist___header">Add New Track</h3>
-      <form
-        className="w-25 mt-5 createPlaylist__form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          return formik.handleSubmit();
-        }}
-      >
-        <div className="mb-3">
-          <label>Track Name</label>
-          <input
-            type="text"
-            className="form-control w-100"
-            name="name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label>Track Description</label>
-          <textarea
-            type="text"
-            className="form-control w-100"
-            name="description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label>Add To Playlist</label>
-          <select
-            name="playlist"
-            value={formik.values.playlist}
-            onChange={formik.handleChange}
-          >
-            <option defaultValue disabled={true}>
-              Select
-            </option>
-            {userPlaylists.map((name, index) => (
-              <option key={index} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <label>Track Audio</label>
-          <input
-            type="file"
-            className="form-control w-100"
-            name="fakeTrack"
-            value={formik.values.fakeTrack}
-            onChange={(e) => {
-              setCustomTrack(e.target.files[0]);
-              formik.handleChange(e);
+    <div className="row createPlaylist">
+      <div className="col-md-4 d-none d-md-block  createPlaylist__left">
+        <h2>Add New Track</h2>
+      </div>
+      <div className="col-md-8">
+        <div className="d-flex flex-column  ">
+          {/* <img src={require("./../../assest/bat-mid.png")} className=" my-5" /> */}
+          <h3 className="createPlaylist___header"></h3>
+          <form
+            className="w-50 mt-5 createPlaylist__form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              return formik.handleSubmit();
             }}
-          />
-        </div>
+          >
+            <div className="mb-3">
+              <label>Track Name</label>
+              <input
+                type="text"
+                className="form-control w-100"
+                name="name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label>Track Description</label>
+              <textarea
+                type="text"
+                className="form-control w-100"
+                name="description"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label>Add To Playlist</label>
+              <select
+                name="playlist"
+                value={formik.values.playlist}
+                onChange={formik.handleChange}
+              >
+                <option defaultValue={true}>Select</option>
+                {userPlaylists.map((name, index) => (
+                  <option key={index} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <button type="submit" className="customBtn secondaryCustomBtn mt-5">
-          Add
-        </button>
-        <small className="createPlaylist__error">
-          {formik.errors.name ||
-            formik.errors.fakeTrack ||
-            formik.errors.description ||
-            formik.errors.playlist}
-        </small>
-      </form>
+            <div className="mb-3">
+              <label>Track Audio</label>
+              <input
+                type="file"
+                className="form-control w-100"
+                name="fakeTrack"
+                value={formik.values.fakeTrack}
+                onChange={(e) => {
+                  setCustomTrack(e.target.files[0]);
+                  formik.handleChange(e);
+                }}
+              />
+            </div>
+
+            <button type="submit" className="customBtn secondaryCustomBtn mt-5">
+              Add
+            </button>
+            <small className="createPlaylist__error">
+              {formik.errors.name ||
+                formik.errors.fakeTrack ||
+                formik.errors.description ||
+                formik.errors.playlist}
+            </small>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

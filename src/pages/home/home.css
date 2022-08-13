@@ -49,3 +49,26 @@
   font-weight: 400;
   opacity: 0.8;
 }
+
+/* HANDLE: search */
+.home__search-input {
+  outline: none;
+  background-color: var(--yellowColor);
+  border: none;
+  padding: 1rem 2rem !important;
+  border-radius: 0.5rem;
+}
+.home__search-select {
+  padding: 01rem 0.9rem;
+  outline: none;
+  background-color: var(--bgColor);
+  font-size: 1.4rem;
+  color: var(--yellowColor);
+  border: 0.1rem solid var(--yellowColor);
+  margin-right: 0.5rem;
+  appearance: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}

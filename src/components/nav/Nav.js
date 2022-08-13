@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/config";
 import { logout } from "../../firebase/users";
+import { useHistory } from "react-router-dom";
 import "./nav.css";
 export default function Nav() {
   let [userId, setUserId] = useState("");
   let menuRef = React.createRef();
-  // useEffect(() => {
-  //   setUserId(localStorage.getItem("uID"));
-  // }, [localStorage.getItem("uID")]);
+  let history = useHistory();
   onAuthStateChanged(auth, (user) => {
     if (user != "null" || user != null) setUserId(localStorage.getItem("uID"));
     else setUserId("");
@@ -26,15 +25,15 @@ export default function Nav() {
         <div className="container-fluid d-flex justify-content-between align-items-center">
           <div className="d-flex justify-content-between align-items-center w-100 px-4">
             <h4 className="customNav__logo">
-              <Link to="/" className="customNav__logo-link">
-                P
-                <span className="mx-1">
+              <Link to="/" className="customNav__logo-link  ">
+                ST
+                <span>
                   <img
                     src={require("./../../assest/bat-mid.png")}
-                    className="w-25"
+                    className=" customNav__logo-img"
                   />
                 </span>
-                DCAST
+                RY
               </Link>
             </h4>
 
@@ -69,11 +68,22 @@ export default function Nav() {
                 Add Playlist
               </Link>
             </li>
+            <li onClick={handleMenuClose}>
+              <Link to={``} className="customName__menu-link">
+                Favorites
+              </Link>
+            </li>
+            <li onClick={handleMenuClose}>
+              <Link to={`/${userId}/profile`} className="customName__menu-link">
+                Profile
+              </Link>
+            </li>
             <li
               onClick={() => {
                 handleMenuClose();
                 logout();
                 window.location.reload();
+                history.push("/");
               }}
               className="customName__menu-link"
             >

@@ -49,7 +49,7 @@ export default function Tracks() {
       return {
         ...prevState,
         progress: ((currentTime * 100) / duration).toFixed(0),
-        duration,
+        duration: duration.toFixed(0),
       };
     });
     if (audioProgress.progress == 100) {
@@ -179,6 +179,7 @@ export default function Tracks() {
                 <p>&ldquo;{currentTrack?.description}&rdquo;</p>
               </div>
             </div>
+            {/* HANDLE: comments */}
             <Comments trackId={currentTrack?.track_ID} />
             {localStorage.getItem("uID") ? (
               <AddComment trackId={currentTrack?.track_ID} />
