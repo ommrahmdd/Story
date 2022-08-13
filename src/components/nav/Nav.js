@@ -82,8 +82,8 @@ export default function Nav() {
               onClick={() => {
                 handleMenuClose();
                 logout();
-                window.location.reload();
                 history.push("/");
+                window.location.reload();
               }}
               className="customName__menu-link"
             >

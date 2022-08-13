@@ -12,6 +12,9 @@ import {
   query,
   where,
   doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 let userRef = collection(db, "users");
@@ -56,4 +59,18 @@ export let getUserById = async (userId) => {
     ...userDoc.data(),
   };
   return userData;
+};
+
+// HANDLE: add playlist to favorite
+export let addPlaylistToFav = async (user_id, playlist_id) => {
+  let docRef = doc(db, "users", user_id);
+  await updateDoc(docRef, {
+    fav_playlist: arrayUnion(playlist_id),
+  });
+};
+export let removePlaylistFromFav = async (user_id, playlist_id) => {
+  let docRef = doc(db, "users", user_id);
+  await updateDoc(docRef, {
+    fav_playlist: arrayRemove(playlist_id),
+  });
 };

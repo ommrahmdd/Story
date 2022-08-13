@@ -89,3 +89,27 @@
 .tracks__right-track div p {
   font-weight: 300;
 }
+.audio__trackFav {
+  /* background-color: var(--yellowColor); */
+  color: var(--yellowColor);
+  padding: 0.5rem;
+  border-radius: 0.8rem;
+  border: 0.1rem solid var(--yellowColor);
+  cursor: pointer;
+}
+.audio__trackFav i {
+  font-size: 1.7rem;
+  margin: 0;
+  padding: 0;
+  margin-right: 0.5rem;
+}
+.audio__trackFav span {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.audio__trackFav-white {
+  color: white;
+}
+.audio__trackFav-red {
+  color: red;
+}

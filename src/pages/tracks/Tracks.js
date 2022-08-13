@@ -4,6 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import AddComment from "../../components/addComment/AddComment";
 import Comments from "../../components/comments/Comments";
 import { getPlaylistById, getTracksByID } from "../../firebase/playlists";
+import {
+  addPlaylistToFav,
+  getUserById,
+  removePlaylistFromFav,
+} from "../../firebase/users";
 import "./tracks.css";
 export default function Tracks() {
   //TODO: hide add comment if current track is null
@@ -14,8 +19,11 @@ export default function Tracks() {
   let [pausePlay, setPausePlay] = useState(true);
   let [audioProgress, setAudioProgress] = useState({});
   let [currentIndex, setCurrentIndex] = useState(0);
+  let [favTrack, setFavTrack] = useState(false);
+  let [favPlaylist, setFavPlaylist] = useState(false);
   let audioRef = React.createRef();
   let customAudioRef = React.createRef();
+  let trackHeartIcon = React.createRef();
   // HANDLE: time in MM:SS
   var minutesCurrent = "0" + Math.floor(audioProgress.progress / 60);
   var secondsCurrent = "0" + (audioProgress.progress - minutesCurrent * 60);
@@ -26,6 +34,14 @@ export default function Tracks() {
   var durFull = minutesFull.substr(-2) + ":" + secondsFull.substr(-2);
 
   useEffect(() => {
+    getUserById(localStorage.getItem("uID")).then((data) => {
+      console.log(data);
+      data.fav_playlist.some((fav) => {
+        if (fav == params) {
+          setFavPlaylist(true);
+        }
+      });
+    });
     getPlaylistById(params).then((data) => {
       setPlaylist(data);
       data.tracks.map((trackID) => {
@@ -105,6 +121,21 @@ export default function Tracks() {
       progress: 0,
     });
   };
+  let handleAddPlaylistToFav = () => {
+    if (favPlaylist) {
+      removePlaylistFromFav(localStorage.getItem("uID"), params).then(
+        (data) => {
+          console.log("removeed");
+        }
+      );
+      setFavPlaylist(false);
+    } else {
+      addPlaylistToFav(localStorage.getItem("uID"), params).then((data) => {
+        console.log("Added");
+      });
+      setFavPlaylist(true);
+    }
+  };
   return (
     <div className="tracks">
       <div className="container">
@@ -115,7 +146,10 @@ export default function Tracks() {
               &ldquo;
               {playlist.name}&rdquo; <span>Playlist</span>
             </h2>
-            <div className="tracks__currentAudio">
+            <div
+              className="tracks__currentAudio"
+              hidden={currentTrack.name ? false : true}
+            >
               <h4>{currentTrack?.name}</h4>
               <audio
                 src={currentTrack?.url}
@@ -177,6 +211,27 @@ export default function Tracks() {
               <div className="mt-5">
                 <h6>About {currentTrack?.name}</h6>
                 <p>&ldquo;{currentTrack?.description}&rdquo;</p>
+              </div>
+            </div>
+            {/* HANDLE: Favorite */}
+            <div className="d-flex justify-content-end ">
+              <div
+                className="d-flex align-items-center my-3 audio__trackFav "
+                onClick={handleAddPlaylistToFav}
+              >
+                <i
+                  className={`fa-solid fa-heart ${
+                    favPlaylist
+                      ? "audio__trackFav-red"
+                      : "audio__trackFav-white"
+                  }`}
+                  ref={trackHeartIcon}
+                ></i>
+                <span className="p-0">
+                  {favPlaylist
+                    ? "Remove Playlist From Favorite"
+                    : "Add Playlist To Favorite"}
+                </span>
               </div>
             </div>
             {/* HANDLE: comments */}

@@ -17,3 +17,28 @@
   margin: 0;
   margin-top: -0.5rem;
 }
+.userData__editProfile {
+  right: 5rem !important;
+}
+.swiper {
+  height: 25rem;
+  width: 80rem;
+  margin-top: 0.5rem;
+}
+.swiper-slide {
+  height: 100%;
+  background-color: var(--bgColor-light);
+  box-shadow: 0.8rem 0.3rem 3rem rgba(0, 0, 0, 0.327);
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  border-radius: 1rem;
+}
+
+.swiper-slide img {
+  width: auto;
+  height: 15rem;
+  margin-bottom: 1rem;
+}
