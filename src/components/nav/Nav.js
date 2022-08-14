@@ -69,7 +69,10 @@ export default function Nav() {
               </Link>
             </li>
             <li onClick={handleMenuClose}>
-              <Link to={``} className="customName__menu-link">
+              <Link
+                to={`/favorites/${userId}`}
+                className="customName__menu-link"
+              >
                 Favorites
               </Link>
             </li>

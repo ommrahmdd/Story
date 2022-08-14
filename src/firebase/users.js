@@ -17,7 +17,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 
-let userRef = collection(db, "users");
+export let userRef = collection(db, "users");
 //HANDLE: login
 export let login = async (email, password) => {
   let logged = await signInWithEmailAndPassword(auth, email, password);
@@ -60,7 +60,7 @@ export let getUserById = async (userId) => {
   };
   return userData;
 };
-
+// HANDLE: favorites
 // HANDLE: add playlist to favorite
 export let addPlaylistToFav = async (user_id, playlist_id) => {
   let docRef = doc(db, "users", user_id);
@@ -68,9 +68,42 @@ export let addPlaylistToFav = async (user_id, playlist_id) => {
     fav_playlist: arrayUnion(playlist_id),
   });
 };
+// HANDLE: remove playlist from favorites
 export let removePlaylistFromFav = async (user_id, playlist_id) => {
   let docRef = doc(db, "users", user_id);
   await updateDoc(docRef, {
     fav_playlist: arrayRemove(playlist_id),
   });
+};
+
+// HANDLE: add track to favorite
+export let addTrackToFav = async (user_id, track_id) => {
+  let docRef = doc(db, "users", user_id);
+  await updateDoc(docRef, {
+    fav_tracks: arrayUnion(track_id),
+  });
+};
+
+// HANDLE: remove track from favorite
+export let addRmoveTrackFromFav = async (type, user_id, track_id) => {
+  let docRef = doc(db, "users", user_id);
+  if (type == "add") {
+    await updateDoc(docRef, {
+      fav_tracks: arrayUnion(track_id),
+    });
+  } else if (type == "remove") {
+    await updateDoc(docRef, {
+      fav_tracks: arrayRemove(track_id),
+    });
+  }
+};
+
+// HANDLE: get user fav playlists
+export let getUserFav = async (userId) => {
+  let docRef = doc(db, "users", userId);
+  let user = await getDoc(docRef);
+  return {
+    fav_playlist: user.data().fav_playlist,
+    fav_tracks: user.data().fav_tracks,
+  };
 };

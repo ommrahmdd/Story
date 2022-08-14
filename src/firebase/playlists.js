@@ -36,7 +36,12 @@ export let addPlaylist = async (data, userId) => {
 export let getUserPlaylists = async (userId) => {
   let q = query(playlistsRef, where("userId", "==", userId));
   let docs = await getDocs(q);
-  let playlists = docs.docs.map((playlist) => playlist.data());
+  let playlists = docs.docs.map((playlist) => {
+    return {
+      ...playlist.data(),
+      playlist_id: playlist.id,
+    };
+  });
 
   return playlists;
 };
@@ -56,7 +61,6 @@ export let getPlaylistById = async (playlist_id) => {
   let docRef = doc(db, "playlists", playlist_id);
   let snapShot = await getDoc(docRef);
   let tracks = snapShot.data().tracks;
-  console.log(tracks);
   return {
     name: snapShot.data().name,
     image: snapShot.data().image,

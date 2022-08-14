@@ -1,4 +1,5 @@
 import { async } from "@firebase/util";
+import { onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AddComment from "../../components/addComment/AddComment";
@@ -6,14 +7,17 @@ import Comments from "../../components/comments/Comments";
 import { getPlaylistById, getTracksByID } from "../../firebase/playlists";
 import {
   addPlaylistToFav,
+  addRmoveTrackFromFav,
   getUserById,
   removePlaylistFromFav,
+  userRef,
 } from "../../firebase/users";
 import "./tracks.css";
 export default function Tracks() {
   //TODO: hide add comment if current track is null
   let params = useParams().playlist_id;
   let [playlist, setPlaylist] = useState({});
+  let [currentUser, setCurrentUser] = useState({});
   let [tracks, setTracks] = useState([]);
   let [currentTrack, setCurrentTrack] = useState({});
   let [pausePlay, setPausePlay] = useState(true);
@@ -35,7 +39,7 @@ export default function Tracks() {
 
   useEffect(() => {
     getUserById(localStorage.getItem("uID")).then((data) => {
-      console.log(data);
+      setCurrentUser(data);
       data.fav_playlist.some((fav) => {
         if (fav == params) {
           setFavPlaylist(true);
@@ -53,6 +57,7 @@ export default function Tracks() {
       });
     });
   }, []);
+
   let handlePausePlay = (e) => {
     setPausePlay(!pausePlay);
     if (pausePlay) audioRef.current.play();
@@ -87,13 +92,21 @@ export default function Tracks() {
   };
   let handleTrackClick = (e, index) => {
     setCurrentTrack(tracks[index]);
-    console.log(currentTrack);
     setAudioProgress({
       duration: 0,
       progress: 0,
     });
     setPausePlay(true);
     setCurrentIndex(index);
+    // HANDLE: fav track
+    getUserById(localStorage.getItem("uID")).then((data) => {
+      setCurrentUser(data);
+    });
+    let result = currentUser.fav_tracks?.find((track) => {
+      return track == tracks[index].track_ID;
+    });
+    if (result) setFavTrack(true);
+    else setFavTrack(false);
   };
   let handleForword = () => {
     if (tracks[currentIndex + 1]) {
@@ -123,19 +136,36 @@ export default function Tracks() {
   };
   let handleAddPlaylistToFav = () => {
     if (favPlaylist) {
-      removePlaylistFromFav(localStorage.getItem("uID"), params).then(
-        (data) => {
-          console.log("removeed");
-        }
-      );
-      setFavPlaylist(false);
-    } else {
-      addPlaylistToFav(localStorage.getItem("uID"), params).then((data) => {
-        console.log("Added");
+      removePlaylistFromFav(localStorage.getItem("uID"), params).then(() => {
+        setFavPlaylist(false);
       });
-      setFavPlaylist(true);
+    } else {
+      addPlaylistToFav(localStorage.getItem("uID"), params).then(() => {
+        setFavPlaylist(true);
+      });
     }
   };
+
+  let handleAddRemoveTrackFromFav = () => {
+    if (favTrack) {
+      addRmoveTrackFromFav(
+        "remove",
+        localStorage.getItem("uID"),
+        currentTrack.track_ID
+      ).then(() => {
+        setFavTrack(false);
+      });
+    } else {
+      addRmoveTrackFromFav(
+        "add",
+        localStorage.getItem("uID"),
+        currentTrack.track_ID
+      ).then(() => {
+        setFavTrack(true);
+      });
+    }
+  };
+
   return (
     <div className="tracks">
       <div className="container">
@@ -215,8 +245,23 @@ export default function Tracks() {
             </div>
             {/* HANDLE: Favorite */}
             <div className="d-flex justify-content-end ">
+              {/* HANDLE: track fav */}
               <div
-                className="d-flex align-items-center my-3 audio__trackFav "
+                className="d-flex align-items-center my-3 audio__trackFav me-4"
+                onClick={handleAddRemoveTrackFromFav}
+              >
+                <i
+                  className={`fa-solid fa-heart ${
+                    favTrack ? "audio__trackFav-red" : "audio__trackFav-white"
+                  }`}
+                ></i>
+                <span className="p-0">
+                  {favTrack ? "Dislike Track" : "Like Track"}
+                </span>
+              </div>
+              {/* HANDLE: playlist fav */}
+              <div
+                className="d-flex align-items-center my-3 audio__trackFav"
                 onClick={handleAddPlaylistToFav}
               >
                 <i
@@ -228,9 +273,7 @@ export default function Tracks() {
                   ref={trackHeartIcon}
                 ></i>
                 <span className="p-0">
-                  {favPlaylist
-                    ? "Remove Playlist From Favorite"
-                    : "Add Playlist To Favorite"}
+                  {favPlaylist ? "Dislike Playlist" : "Like Playlist"}
                 </span>
               </div>
             </div>
