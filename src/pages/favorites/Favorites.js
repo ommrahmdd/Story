@@ -42,10 +42,18 @@ export default function Favorites() {
   let handlePlaylist = (id) => {
     history.push(`/${id}/tracks`);
   };
+  // HANDLE: track click
+  let handleTrack = (trackID) => {
+    history.push(`/track?user=${userId}&track=${trackID}`);
+  };
   return (
     <div className="row createPlaylist">
-      <div className="col-md-4 createPlaylist__left">
-        <h2>My Favorites</h2>
+      <div className="col-md-4 createPlaylist__left h-md-auto h-100">
+        <h2 className="opacity-md-100 opacity-25 ">
+          My
+          <br />
+          Favorites
+        </h2>
       </div>
       <div className="col-md-8 fav__right">
         {/* HANDLE: playlists */}
@@ -90,6 +98,7 @@ export default function Favorites() {
                 <div
                   className="d-flex align-items-center track__box"
                   key={index}
+                  onClick={() => handleTrack(track.track_ID)}
                 >
                   <i
                     className="fa-solid fa-headphones-simple "

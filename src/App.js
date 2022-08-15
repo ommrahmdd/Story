@@ -8,6 +8,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Signup from "./pages/signup/Signup";
+import SingleTrack from "./pages/SingleTrack/SingleTrack";
 import Tracks from "./pages/tracks/Tracks";
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/:id/playlist" exact component={CreatePlaylist} />
           <Route path="/:id/profile" exact component={Profile} />
           <Route path="/favorites/:userId" exact component={Favorites} />
+          <Route path="/track" exact component={SingleTrack} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/" exact component={Home} />
