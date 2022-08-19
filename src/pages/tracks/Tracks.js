@@ -177,8 +177,10 @@ export default function Tracks() {
               {playlist.name}&rdquo; <span>Playlist</span>
             </h2>
             <div
-              className="tracks__currentAudio"
-              hidden={currentTrack.name ? false : true}
+              className={`tracks__currentAudio ${
+                !currentTrack.name && "opacity-25"
+              }`}
+              disabled={currentTrack.name ? false : true}
             >
               <h4>{currentTrack?.name}</h4>
               <audio
@@ -256,7 +258,8 @@ export default function Tracks() {
                   }`}
                 ></i>
                 <span className="p-0">
-                  {favTrack ? "Dislike Track" : "Like Track"}
+                  {/* {favTrack ? "Dislike Track" : "Like Track"} */}
+                  Track
                 </span>
               </div>
               {/* HANDLE: playlist fav */}
@@ -273,14 +276,17 @@ export default function Tracks() {
                   ref={trackHeartIcon}
                 ></i>
                 <span className="p-0">
-                  {favPlaylist ? "Dislike Playlist" : "Like Playlist"}
+                  {/* {favPlaylist ? "Dislike Playlist" : "Like Playlist"} */}
+                  Playlist
                 </span>
               </div>
             </div>
             {/* HANDLE: comments */}
             <Comments trackId={currentTrack?.track_ID} />
             {localStorage.getItem("uID") ? (
-              <AddComment trackId={currentTrack?.track_ID} />
+              currentTrack.name && (
+                <AddComment trackId={currentTrack?.track_ID} />
+              )
             ) : (
               <div className="d-flex justify-content-center align-items-center">
                 <Link to="/login" className="nav__login-link">

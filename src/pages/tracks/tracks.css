@@ -94,7 +94,7 @@
   color: var(--yellowColor);
   padding: 0.5rem;
   border-radius: 0.8rem;
-  border: 0.1rem solid var(--yellowColor);
+  /* border: 0.1rem solid var(--yellowColor); */
   cursor: pointer;
 }
 .audio__trackFav i {

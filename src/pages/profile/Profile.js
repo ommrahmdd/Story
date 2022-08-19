@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getUserPlaylists } from "../../firebase/playlists";
 import { getUserById } from "../../firebase/users";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,6 +7,7 @@ import "./../createPlaylist/createPlaylist.css";
 import "swiper/css";
 import "./profile.css";
 export default function Profile() {
+  let history = useHistory();
   let { id } = useParams();
   let [user, setUser] = useState({});
   let [playlists, setPlaylists] = useState([]);
@@ -28,7 +29,12 @@ export default function Profile() {
       {/* HANDLE: right */}
       <div className="col-md-8 userData position-relative">
         <div className="mb-5 position-absolute userData__editProfile ">
-          <button className="customBtn secondaryCustomBtn">
+          <button
+            className="customBtn secondaryCustomBtn"
+            onClick={() => {
+              history.push(`/${id}/editProfile`);
+            }}
+          >
             Edit Information
           </button>
         </div>
@@ -57,7 +63,7 @@ export default function Profile() {
               {playlists.map((playlist, index) => (
                 <SwiperSlide key={index}>
                   <img src={playlist.image} />
-                  <p>{playlist.name}</p>
+                  <p className="fs-3">{playlist.name}</p>
                   <span>
                     {playlist.tracks?.length > 0
                       ? `${playlist.tracks.length} tracks`

@@ -12,11 +12,12 @@ export default function SingleTrack() {
   let [playing, setPlaying] = useState(false);
   let [progress, setProgress] = useState({});
   let [favTracks, setFavTracks] = useState([]);
+  let [repeat, setRepeat] = useState(localStorage.getItem("repeat") || false);
   let audioRef = React.createRef();
   let customAudioRef = React.createRef();
-
   useEffect(() => {
     getTracksByID(trackId).then((data) => {
+      console.log(data);
       setCurrentTrack(data);
     });
     getUserById(userId).then((user) => {
@@ -47,8 +48,11 @@ export default function SingleTrack() {
 
     if (audioRef.current.currentTime == duration) {
       setPlaying(false);
-      console.log("Tureeeeeeeeee");
+      setProgress({});
+      audioRef.current.currentTime = 0;
     }
+    console.log(duration - audioRef.current.currentTime);
+
     setProgress((prevState) => {
       return {
         ...prevState,
@@ -71,6 +75,31 @@ export default function SingleTrack() {
       };
     });
   };
+  // HANDLE: click on other tracks
+  let handleTrackClick = (trackID) => {
+    getTracksByID(trackID).then((data) => {
+      setCurrentTrack(data);
+    });
+    // setPlaying(false)
+    setProgress({});
+    audioRef.current.currentTime = 0;
+  };
+  // HANDLE: repeat btn
+  // let handleRepeatBtn = () => {
+  //   if (repeat) {
+  //     setRepeat(false);
+  //     localStorage.setItem("repeat", false);
+  //   } else {
+  //     localStorage.setItem("repeat", true);
+  //     setRepeat(true);
+  //     if (audioRef.current.currentTime == progress.duration) {
+  //       audioRef.current.currentTime = 0;
+  //       audioRef.current.play();
+  //       // setPlaying(false);
+  //       console.log("True");
+  //     }
+  //   }
+  // };
   return (
     <div className="row createPlaylist">
       <div className="col-md-4 createPlaylist__left">
@@ -87,7 +116,7 @@ export default function SingleTrack() {
           <p className="singleTrack__audioBox-trackName">{currentTrack.name}</p>
           <div className="singleTrack__audioBox-customAudio">
             <div
-              className="progress"
+              className="progress "
               ref={customAudioRef}
               onClick={(e) => handleProgressClick(e)}
             >
@@ -110,37 +139,56 @@ export default function SingleTrack() {
             </div>
           </div>
         </div>
+        {/* HANDLE: The remain tracks in favorites */}
         <div className="d-flex flex-column align-items-center pb-5">
           {favTracks.length != 0 ? (
-            favTracks?.map((track, index) => (
-              <div
-                className="d-flex align-items-center track__box"
-                key={index}
-                // onClick={() => handleTrack(track.track_ID)}
-              >
-                <i
-                  className="fa-solid fa-headphones-simple "
-                  style={{
-                    fontSize: "8rem",
-                  }}
-                ></i>
-                <div className="ms-5">
-                  <h4>{track.name}</h4>
-                  <p>{track.description}</p>
+            favTracks?.map((track, index) =>
+              track.track_ID === currentTrack?.track_ID ? (
+                <div
+                  className="d-flex align-items-center opacity-25 track__box"
+                  key={index}
+                >
+                  <i
+                    className="fa-solid fa-headphones-simple "
+                    style={{
+                      fontSize: "8rem",
+                    }}
+                  ></i>
+                  <div className="ms-5">
+                    <h4>{track.name}</h4>
+                    <p>{track.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))
+              ) : (
+                <div
+                  className="d-flex align-items-center track__box"
+                  key={index}
+                  onClick={() => handleTrackClick(track.track_ID)}
+                >
+                  <i
+                    className="fa-solid fa-headphones-simple "
+                    style={{
+                      fontSize: "8rem",
+                    }}
+                  ></i>
+                  <div className="ms-5">
+                    <h4>{track.name}</h4>
+                    <p>{track.description}</p>
+                  </div>
+                </div>
+              )
+            )
           ) : (
             <div className="d-flex justify-content-center align-items-center py-5 w-100">
               <div
-                class="spinner-grow text-light"
+                className="spinner-grow text-light"
                 role="status"
                 style={{
                   height: "5rem",
                   width: "5rem",
                 }}
               >
-                <span class="visually-hidden">Loading...</span>
+                <span className="visually-hidden">Loading...</span>
               </div>
             </div>
           )}

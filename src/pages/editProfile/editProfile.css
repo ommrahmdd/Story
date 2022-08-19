@@ -1,0 +1,37 @@
+.editProfile {
+  min-height: 100vh;
+  background-color: var(--bgColor);
+  padding: 2rem;
+}
+.editProfile__left h3,
+.editProfile__right h3 {
+  color: var(--yellowColor);
+  font-size: 4rem;
+  font-weight: 300;
+  text-transform: capitalize;
+  margin-bottom: 2.5rem;
+}
+.editProfile__left-box {
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.editProfile__left-box:hover {
+  opacity: 0.8;
+}
+.editProfile__left-box img {
+  width: 15rem;
+  height: 15rem;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+.editProfile__left-box h4 {
+  font-size: 2rem;
+  color: var(--yellowColor);
+  font-weight: 300;
+  display: block;
+}
+.editProfile__left-box p {
+  color: var(--yellowColor);
+  font-weight: 300;
+}

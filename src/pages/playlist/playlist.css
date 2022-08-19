@@ -1,0 +1,52 @@
+.playlist {
+  min-height: 100vh;
+  background-color: var(--bgColor);
+
+  padding: 2rem;
+}
+.playlist__left img {
+  height: 80%;
+  width: 70%;
+  object-fit: contain;
+}
+.playlist__right {
+  padding: 4rem 1rem;
+}
+.playlist__right-form label {
+  font-size: 1.8rem;
+  color: var(--yellowColor);
+  margin-bottom: 0.7rem;
+  font-weight: 300;
+  display: block;
+}
+.playlist__right-form {
+  width: 80%;
+}
+.playlist__right-form input {
+  width: 50%;
+  padding: 0.8rem 1rem;
+  font-size: 1.6rem;
+  color: var(--bgColor);
+  outline: none;
+}
+.playlist__right-tracks i {
+  color: var(--yellowColor);
+  margin-right: 2rem;
+}
+.playlist__right-track {
+  color: var(--yellowColor);
+}
+.playlist__right-track h4 {
+  font-size: 2rem;
+}
+.playlist__right-track p {
+  font-weight: 300;
+}
+.playlist__right-tracks button {
+  margin-left: 25rem;
+  font-size: 1.45rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--yellowColor);
+}

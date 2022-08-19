@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import {
   addDoc,
   arrayUnion,
@@ -106,4 +107,10 @@ export let addNewComment = async (trackId, newComment) => {
       createdAt: new Date().toLocaleString(),
     }),
   });
+};
+
+// HANDLE: update Playlist
+export let updatePlaylist = async (playlist_id, data) => {
+  let docRef = doc(db, "playlists", playlist_id);
+  let updated = await updateDoc(docRef, data);
 };

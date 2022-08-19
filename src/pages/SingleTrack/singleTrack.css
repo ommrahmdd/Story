@@ -4,7 +4,7 @@
 .singleTrack__audioBox i {
   color: var(--yellowColor);
   font-size: 15rem;
-  margin-bottom: 8.5rem;
+  margin-bottom: 5rem;
 }
 .singleTrack__audioBox-trackName {
   color: var(--yellowColor);
@@ -23,7 +23,22 @@
 }
 .customAudio__playPause i {
   font-size: 5rem;
-  padding: 2rem 0;
+  padding-top: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+.customAudio__options i {
+  font-size: 1.75rem;
+  color: var(--yellowColor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.customAudio__options i:hover {
+  opacity: 0.4;
+}
+
+@media only screen and (max-width: 760px) {
+  .singleTrack__audioBox-customAudio .progress {
+    width: 38rem !important;
+  }
 }
