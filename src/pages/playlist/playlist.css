@@ -50,3 +50,8 @@
   border-radius: 1rem;
   background-color: var(--yellowColor);
 }
+.playlist__toast button {
+  display: inline-block !important;
+  align-self: flex-start !important;
+  width: 20%;
+}

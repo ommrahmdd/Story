@@ -17,6 +17,7 @@ export default function Home() {
   }, []);
   let handleSelectChange = (e) => {
     setSelectValue(e.target.value);
+    console.log(selectValue);
   };
   let handleSearchBtn = () => {
     setPlaylists([]);
@@ -95,7 +96,15 @@ export default function Home() {
           name="search"
           value={searchValue}
           onChange={(e) => handleSearchInput(e)}
+          id="search"
+          list="searchDataList"
         />
+        <datalist id="searchDataList">
+          {selectValue == "playlist" &&
+            playlists?.map((playlist, index) => {
+              return <option value={`${playlist.name}`} key={index} />;
+            })}
+        </datalist>
         <button
           className="customBtn primaryBtn ms-2 py-3"
           onClick={handleSearchBtn}

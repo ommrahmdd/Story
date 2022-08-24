@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+  deleteTrackFromPlaylist,
   getPlaylistById,
   getTracksByID,
   updatePlaylist,
 } from "../../firebase/playlists";
+import toast, { Toaster } from "react-hot-toast";
 import "./playlist.css";
 export default function Playlist() {
   let { playlistId } = useParams();
   let [playlist, setPlaylist] = useState({});
   let [tracks, setTracks] = useState([]);
   let [playlistName, setPlaylistName] = useState("");
+  let [updateResponse, setUpdateResponse] = useState(false);
   useEffect(() => {
     getPlaylistById(playlistId).then((data) => {
       setPlaylist(data);
@@ -25,18 +28,57 @@ export default function Playlist() {
       });
     });
   }, []);
-  let handleDeleteTrack = (index) => {
-    tracks.splice(index, 1);
-    setTracks(tracks);
+  let handleDeleteTrack = (index, track_id) => {
+    toast(
+      (t) => (
+        <span className="playlist__toast">
+          Are You Sure you want to delete this track ?
+          <button
+            className="fs-5 mt-4 me-3 "
+            onClick={() => {
+              // setUpdateResponse(true);
+              toast.dismiss(t.id);
+              // ad5TVOK1oSWcga3ZiS9g
+              deleteTrackFromPlaylist(playlistId, track_id).then(() => {
+                window.location.reload();
+              });
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="fs-5 mt-2"
+            onClick={() => {
+              setUpdateResponse(false);
+              toast.dismiss(t.id);
+            }}
+          >
+            Dismiss
+          </button>
+        </span>
+      ),
+      {
+        style: {
+          // width: "auto",
+          // height: "10rem",
+          fontSize: "1.6rem",
+        },
+      }
+    );
+    // if (updateResponse) {
+    //   // tracks.splice(index, 1);
+    //   // setTracks(tracks);
+    //   ;
+    // }
   };
-  let handleUpdate = () => {
-    updatePlaylist(playlistId, {
-      name: playlistName,
-      tracks: tracks.map((track) => track.track_ID),
-    }).then(() => {
-      console.log("Updated");
-    });
-  };
+  // let handleUpdate = () => {
+  //   updatePlaylist(playlistId, {
+  //     name: playlistName,
+  //     tracks: tracks.map((track) => track.track_ID),
+  //   }).then(() => {
+  //     console.log("Updated");
+  //   });
+  // };
   return (
     <div className="row playlist">
       <div className="col-md-4 d-flex justify-items-center playlist__left">
@@ -47,7 +89,7 @@ export default function Playlist() {
           className="playlist__right-form"
           onSubmit={(e) => {
             e.preventDefault();
-            handleUpdate();
+            // handleUpdate();
           }}
         >
           <div className="mb-5">
@@ -79,10 +121,11 @@ export default function Playlist() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => handleDeleteTrack(index)}
+                      onClick={() => handleDeleteTrack(index, track.track_ID)}
                     >
                       Delete
                     </button>
+                    <Toaster />
                   </div>
                 ))}
             </div>

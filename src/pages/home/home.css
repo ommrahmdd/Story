@@ -72,3 +72,6 @@
   transition: all 0.3s ease;
   text-align: center;
 }
+datalist option {
+  width: 100%;
+}

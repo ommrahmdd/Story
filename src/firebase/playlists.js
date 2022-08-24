@@ -1,6 +1,7 @@
 import { async } from "@firebase/util";
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -113,4 +114,12 @@ export let addNewComment = async (trackId, newComment) => {
 export let updatePlaylist = async (playlist_id, data) => {
   let docRef = doc(db, "playlists", playlist_id);
   let updated = await updateDoc(docRef, data);
+};
+
+// HANDLE: delete track from playlist
+export let deleteTrackFromPlaylist = async (playlist_id, track_id) => {
+  let docRef = doc(db, "playlists", playlist_id);
+  await updateDoc(docRef, {
+    tracks: arrayRemove(track_id),
+  });
 };
