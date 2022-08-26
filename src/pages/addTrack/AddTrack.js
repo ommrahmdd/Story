@@ -8,6 +8,7 @@ import {
 } from "../../firebase/playlists";
 import { v4 } from "uuid";
 import "./addTrack.css";
+import toast, { Toaster } from "react-hot-toast";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase/config";
 //----------------------------------
@@ -17,7 +18,7 @@ import { storage } from "../../firebase/config";
 export default function AddTrack() {
   let [customTrack, setCustomTrack] = useState({});
   let [userPlaylists, setUserPlaylists] = useState([]);
-  let [progress, setProgress] = useState("");
+  let [progress, setProgress] = useState("s");
   let userId = useParams().id;
   let validate = (values) => {
     let erros = {};
@@ -32,6 +33,13 @@ export default function AddTrack() {
     }
     if (!values.playlist) {
       erros.playlist = "*Playlist is required";
+    }
+    if (
+      !(values.fakeTrack.includes(".mp3") || values.fakeTrack.includes(".mp4"))
+    ) {
+      console.log(values.fakeTrack);
+      console.log(values.fakeTrack.includes(".mp3"));
+      erros.fakeTrack = "You Should upload MP3/MP4 only";
     }
     return erros;
   };
@@ -49,11 +57,33 @@ export default function AddTrack() {
       let uploadedBytes = await uploadBytes(audioRef, customTrack);
       let trackURL = await getDownloadURL(uploadedBytes.ref);
       let playlist_ID = await getPlaylistByName(values.playlist);
-      let updated = await addTrackToPlaylist(playlist_ID[0].playlistID, {
-        name: values.name,
-        description: values.description,
-        trackURL,
-      });
+      // let updated = await addTrackToPlaylist(playlist_ID[0].playlistID, {
+      //   name: values.name,
+      //   description: values.description,
+      //   trackURL,
+      // });
+      toast.promise(
+        addTrackToPlaylist(playlist_ID[0].playlistID, {
+          name: values.name,
+          description: values.description,
+          trackURL,
+        }),
+        {
+          loading: "Loading",
+          success: (data) => `Track has been added !`,
+          error: (err) => `This just happened: ${err.toString()}`,
+        },
+        {
+          style: {
+            minWidth: "250px",
+            fontSize: "2rem",
+          },
+          success: {
+            duration: 5000,
+            icon: "🔥",
+          },
+        }
+      );
       setProgress("Track has been added successfully.");
       setTimeout(() => {
         formik.resetForm();
@@ -151,6 +181,12 @@ export default function AddTrack() {
               {userPlaylists.length == 0 &&
                 "You Should have 1 playlist at least"}
             </small>
+            {/* {progress && (
+              <div className="w-25 bg-dark fs-5 rounded p-4 py-2 mt-4">
+                {progress}
+              </div>
+            )} */}
+            <Toaster />
           </form>
         </div>
       </div>

@@ -3,6 +3,7 @@
   padding: 2.5rem 0 !important;
   /* border-bottom: 1rem solid var(--yellowColor); */
   position: relative;
+  width: 100vw;
 }
 .navbar-collapse {
   flex-grow: 0 !important;
@@ -84,7 +85,7 @@
   position: fixed !important;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   max-height: auto;
   z-index: 15;

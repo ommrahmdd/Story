@@ -40,6 +40,11 @@ export default function Footer() {
           <p>010-26271970</p>
         </div>
       </div>
+      <div className="mt-5 w-100 d-flex justify-content-center">
+        <p>
+          Created By <span className="fs-2 text-light">Omar</span> | &copy;2022
+        </p>
+      </div>
     </footer>
   );
 }

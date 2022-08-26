@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import {
+  deletePlaylist,
   deleteTrackFromPlaylist,
   getPlaylistById,
   getTracksByID,
@@ -14,6 +15,7 @@ export default function Playlist() {
   let [tracks, setTracks] = useState([]);
   let [playlistName, setPlaylistName] = useState("");
   let [updateResponse, setUpdateResponse] = useState(false);
+  let history = useHistory();
   useEffect(() => {
     getPlaylistById(playlistId).then((data) => {
       setPlaylist(data);
@@ -36,11 +38,10 @@ export default function Playlist() {
           <button
             className="fs-5 mt-4 me-3 "
             onClick={() => {
-              // setUpdateResponse(true);
               toast.dismiss(t.id);
-              // ad5TVOK1oSWcga3ZiS9g
-              deleteTrackFromPlaylist(playlistId, track_id).then(() => {
-                window.location.reload();
+              deleteTrackFromPlaylist(playlistId, track_id).then((data) => {
+                console.log(data);
+                // window.location.reload();
               });
             }}
           >
@@ -71,53 +72,99 @@ export default function Playlist() {
     //   ;
     // }
   };
-  // let handleUpdate = () => {
-  //   updatePlaylist(playlistId, {
-  //     name: playlistName,
-  //     tracks: tracks.map((track) => track.track_ID),
-  //   }).then(() => {
-  //     console.log("Updated");
-  //   });
-  // };
+  let handleUpdate = () => {
+    updatePlaylist(playlistId, {
+      name: playlistName,
+      tracks: tracks.map((track) => track.track_ID),
+    }).then(() => {
+      console.log("Updated");
+    });
+  };
+  let handleDeletePlaylist = () => {
+    toast(
+      (t) => (
+        <span className="playlist__toast">
+          Are You Sure you want to delete the playlist ?
+          <button
+            className="fs-5 mt-4 me-3 "
+            onClick={() => {
+              toast.dismiss(t.id);
+              deletePlaylist(playlistId).then(() => {
+                history.back();
+              });
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="fs-5 mt-2"
+            onClick={() => {
+              toast.dismiss(t.id);
+            }}
+          >
+            Dismiss
+          </button>
+        </span>
+      ),
+      {
+        style: {
+          fontSize: "1.6rem",
+        },
+      }
+    );
+  };
   return (
     <div className="row playlist">
-      <div className="col-md-4 d-flex justify-items-center playlist__left">
-        <img src={playlist.image} />
+      <div className="col-md-4 d-flex justify-items-center flex-column align-items-center playlist__left">
+        <img src={playlist.image} className="mb-md-2 mb-4" />
+        <button className="customBtn primaryBtn" onClick={handleDeletePlaylist}>
+          Delete Playlist
+        </button>
       </div>
-      <div className="col-md-8 d-flex justify-items-center playlist__right">
-        <form
-          className="playlist__right-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            // handleUpdate();
-          }}
-        >
-          <div className="mb-5">
-            <label>Playlist Name</label>
-            <input
-              type="text"
-              name="name"
-              value={playlistName}
-              onChange={(e) => {
-                setPlaylistName(e.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-5 playlist__right-tracks">
+      <div className="col-md-8 d-flex justify-content-center  playlist__right">
+        <div className="w-75">
+          <form
+            className="playlist__right-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              return handleUpdate();
+            }}
+          >
+            <div className="mb-5">
+              <label>Playlist Name</label>
+              <input
+                type="text"
+                name="name"
+                value={playlistName}
+                onChange={(e) => {
+                  setPlaylistName(e.target.value);
+                }}
+              />
+            </div>
+            <button type="submit" className="customBtn primaryBtn">
+              Update
+            </button>
+          </form>
+          <div className="mb-5 playlist__right-tracks w-100">
             <label>Tracks</label>
             <div>
               {tracks.length > 0 &&
                 tracks.map((track, index) => (
-                  <div className="d-flex align-items-center" key={index}>
-                    <i
-                      className="fa-solid fa-headphones-simple "
-                      style={{
-                        fontSize: "8rem",
-                      }}
-                    />
-                    <div className="playlist__right-track">
-                      <h4>{track.name}</h4>
-                      <p>{track.description}</p>
+                  <div
+                    className="d-flex w-100 justify-content-between align-items-center flex-md-row "
+                    key={index}
+                  >
+                    <div className="playlist__right-track d-flex align-items-center mb-4">
+                      <i
+                        className="fa-solid fa-headphones-simple "
+                        style={{
+                          fontSize: "8rem",
+                        }}
+                      />
+                      <div>
+                        <h4>{track.name}</h4>
+                        <p>{track.description}</p>
+                      </div>
                     </div>
                     <button
                       type="button"
@@ -130,10 +177,7 @@ export default function Playlist() {
                 ))}
             </div>
           </div>
-          <button type="submit" className="customBtn primaryBtn">
-            Update
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );

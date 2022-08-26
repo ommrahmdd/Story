@@ -12,7 +12,7 @@
 .playlist__right {
   padding: 4rem 1rem;
 }
-.playlist__right-form label {
+.playlist__right label {
   font-size: 1.8rem;
   color: var(--yellowColor);
   margin-bottom: 0.7rem;
@@ -20,14 +20,17 @@
   display: block;
 }
 .playlist__right-form {
-  width: 80%;
+  /* width: 80%; */
 }
 .playlist__right-form input {
-  width: 50%;
+  width: 100%;
   padding: 0.8rem 1rem;
   font-size: 1.6rem;
   color: var(--bgColor);
   outline: none;
+}
+.playlist__right-tracks {
+  margin-top: 3rem;
 }
 .playlist__right-tracks i {
   color: var(--yellowColor);

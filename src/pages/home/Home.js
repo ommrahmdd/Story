@@ -100,10 +100,26 @@ export default function Home() {
           list="searchDataList"
         />
         <datalist id="searchDataList">
-          {selectValue == "playlist" &&
-            playlists?.map((playlist, index) => {
-              return <option value={`${playlist.name}`} key={index} />;
-            })}
+          {selectValue == "playlist"
+            ? playlists?.map((playlist, index) => {
+                console.log(playlist.name);
+                return (
+                  <option
+                    value={`${playlist.name}`}
+                    key={index}
+                    className="bg-secondary"
+                  />
+                );
+              })
+            : tracks.map((track, index) => {
+                console.log(tracks);
+                return <option value={`${track.name}`} key={index} />;
+              })}
+          {/* {selectValue == "track" &&
+            tracks.map((track, index) => {
+              console.log(tracks);
+              return <option value={`${track.name}`} key={index} />;
+            })} */}
         </datalist>
         <button
           className="customBtn primaryBtn ms-2 py-3"

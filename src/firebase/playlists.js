@@ -4,6 +4,7 @@ import {
   arrayRemove,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   Firestore,
   getDoc,
@@ -122,4 +123,10 @@ export let deleteTrackFromPlaylist = async (playlist_id, track_id) => {
   await updateDoc(docRef, {
     tracks: arrayRemove(track_id),
   });
+  return "deleted";
+};
+// HANDLE: delete Playlist
+export let deletePlaylist = async (playlist_id) => {
+  let docRef = doc(db, "playlists", playlist_id);
+  await deleteDoc(docRef);
 };

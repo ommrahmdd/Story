@@ -23,18 +23,22 @@ export default function EditProfile() {
   }, []);
   return (
     <div className="editProfile row">
-      <div className="col-md-4 editProfile__left">
+      <div className="col-md-2"></div>
+      <div className="col-md-8 editProfile__left">
         <h3>playlists</h3>
         <div className="row">
           {playlists &&
             playlists.map((playlist, index) => (
               <div
-                className="col-12 d-flex align-items-center editProfile__left-box"
+                className="col-12 d-flex align-items-center position-relative editProfile__left-box"
                 key={index}
                 onClick={() => {
                   history.push(`/playlist/${playlist.playlist_id}`);
                 }}
               >
+                <p className="position-absolute numbering__box">
+                  {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                </p>
                 <img src={playlist.image} />
                 <div>
                   <h4>{playlist.name}</h4>
@@ -44,13 +48,13 @@ export default function EditProfile() {
             ))}
         </div>
       </div>
-      <div className="col-md-8 editProfile__right">
-        <h3>Tracks</h3>
+      <div className="col-md-2 editProfile__right">
+        {/* <h3>Tracks</h3>
         <div className="row">
           {tracks?.map((track, index) => (
             <div className="col-md-3"></div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

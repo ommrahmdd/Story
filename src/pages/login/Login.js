@@ -44,7 +44,7 @@ export default function Login() {
     <div className="d-flex flex-column align-items-center createPlaylist">
       <h3 className="createPlaylist___header">Login</h3>
       <form
-        className="w-25 mt-5 createPlaylist__form"
+        className="w-md-25 w-50 mt-5 createPlaylist__form"
         onSubmit={(e) => {
           e.preventDefault();
           return formik.handleSubmit();

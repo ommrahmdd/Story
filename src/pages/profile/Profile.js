@@ -35,7 +35,7 @@ export default function Profile() {
               history.push(`/${id}/editProfile`);
             }}
           >
-            Edit Information
+            Edit
           </button>
         </div>
         <div className="d-flex flex-column align-items-start userData__box">

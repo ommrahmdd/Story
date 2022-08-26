@@ -2,6 +2,8 @@
   background-color: var(--bgColor-dark);
   color: var(--yellowColor);
   padding: 8rem 0;
+  padding-bottom: 3rem;
+  width: 100vw;
 }
 .footer__first span {
   font-size: 6.5rem;
