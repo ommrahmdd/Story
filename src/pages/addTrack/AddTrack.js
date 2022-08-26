@@ -134,7 +134,11 @@ export default function AddTrack() {
               />
             </div>
 
-            <button type="submit" className="customBtn secondaryCustomBtn mt-5">
+            <button
+              type="submit"
+              className="customBtn secondaryCustomBtn mt-5"
+              disabled={!formik.isValid || userPlaylists.length == 0}
+            >
               Add
             </button>
             <small className="createPlaylist__error">
@@ -142,6 +146,10 @@ export default function AddTrack() {
                 formik.errors.fakeTrack ||
                 formik.errors.description ||
                 formik.errors.playlist}
+            </small>
+            <small className="createPlaylist__error">
+              {userPlaylists.length == 0 &&
+                "You Should have 1 playlist at least"}
             </small>
           </form>
         </div>

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoue";
 import AddTrack from "./pages/addTrack/AddTrack";
 import CreatePlaylist from "./pages/createPlaylist/CreatePlaylist";
 import EditProfile from "./pages/editProfile/EditProfile";
@@ -19,11 +20,11 @@ function App() {
         <Nav />
         <Switch>
           <Route path="/:playlist_id/tracks" exact component={Tracks} />
-          <Route path="/:id/track" exact component={AddTrack} />
-          <Route path="/:id/playlist" exact component={CreatePlaylist} />
-          <Route path="/:id/profile" exact component={Profile} />
-          <Route path="/:id/editProfile" exact component={EditProfile} />
-          <Route path="/favorites/:userId" exact component={Favorites} />
+          <PrivateRoute path="/:id/track" exact component={AddTrack} />
+          <PrivateRoute path="/:id/playlist" exact component={CreatePlaylist} />
+          <PrivateRoute path="/:id/profile" exact component={Profile} />
+          <PrivateRoute path="/:id/editProfile" exact component={EditProfile} />
+          <PrivateRoute path="/favorites/:userId" exact component={Favorites} />
           <Route path="/playlist/:playlistId" exact component={Playlist} />
           <Route path="/track" exact component={SingleTrack} />
           <Route path="/login" exact component={Login} />
