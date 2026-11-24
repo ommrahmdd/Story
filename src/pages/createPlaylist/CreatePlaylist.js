@@ -1,9 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../../firebase/config";
-import { v4 } from "uuid";
+import { uploadImage } from "../../cloudinary";
 import { useParams } from "react-router-dom";
 import "./createPlaylist.css";
 import { addPlaylist } from "../../firebase/playlists";
@@ -22,7 +20,6 @@ export default function CreatePlaylist() {
     }
     return erros;
   };
-  let imgRef = ref(storage, `playlist/${userId}/${customImg.name + v4()}`);
   let fomrik = useFormik({
     initialValues: {
       name: "",
@@ -30,18 +27,16 @@ export default function CreatePlaylist() {
     },
     validate,
     onSubmit: (values) => {
-      uploadBytes(imgRef, customImg).then((data) => {
-        getDownloadURL(data.ref).then((imgUrl) => {
-          addPlaylist(
-            {
-              ...values,
-              image: imgUrl,
-            },
-            userId
-          ).then((data) => {
-            console.log(data);
-            history.push("/");
-          });
+      uploadImage(customImg).then((imgUrl) => {
+        addPlaylist(
+          {
+            ...values,
+            image: imgUrl,
+          },
+          userId
+        ).then((data) => {
+          console.log(data);
+          history.push("/");
         });
       });
     },
