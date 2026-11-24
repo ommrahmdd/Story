@@ -87,11 +87,11 @@ export let addTrackToFav = async (user_id, track_id) => {
 // HANDLE: remove track from favorite
 export let addRmoveTrackFromFav = async (type, user_id, track_id) => {
   let docRef = doc(db, "users", user_id);
-  if (type == "add") {
+  if (type === "add") {
     await updateDoc(docRef, {
       fav_tracks: arrayUnion(track_id),
     });
-  } else if (type == "remove") {
+  } else if (type === "remove") {
     await updateDoc(docRef, {
       fav_tracks: arrayRemove(track_id),
     });

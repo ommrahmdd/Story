@@ -18,7 +18,6 @@ import { storage } from "../../firebase/config";
 export default function AddTrack() {
   let [customTrack, setCustomTrack] = useState({});
   let [userPlaylists, setUserPlaylists] = useState([]);
-  let [progress, setProgress] = useState("s");
   let userId = useParams().id;
   let validate = (values) => {
     let erros = {};
@@ -53,7 +52,6 @@ export default function AddTrack() {
     },
     validate,
     onSubmit: async (values) => {
-      setProgress("Please Wait ..");
       let uploadedBytes = await uploadBytes(audioRef, customTrack);
       let trackURL = await getDownloadURL(uploadedBytes.ref);
       let playlist_ID = await getPlaylistByName(values.playlist);
@@ -84,10 +82,8 @@ export default function AddTrack() {
           },
         }
       );
-      setProgress("Track has been added successfully.");
       setTimeout(() => {
         formik.resetForm();
-        setProgress("");
         setCustomTrack({});
       }, 2000);
     },
@@ -97,7 +93,7 @@ export default function AddTrack() {
       let dump = data.map((playlist) => playlist.name);
       setUserPlaylists(dump);
     });
-  }, []);
+  }, [userId]);
   return (
     <div className="row createPlaylist">
       <div className="col-md-4 d-none d-md-block  createPlaylist__left">
@@ -106,7 +102,7 @@ export default function AddTrack() {
       <div className="col-md-8">
         <div className="d-flex flex-column  ">
           {/* <img src={require("./../../assest/bat-mid.png")} className=" my-5" /> */}
-          <h3 className="createPlaylist___header"></h3>
+          <div className="createPlaylist___header"></div>
           <form
             className="w-50 mt-5 createPlaylist__form"
             onSubmit={(e) => {
@@ -167,7 +163,7 @@ export default function AddTrack() {
             <button
               type="submit"
               className="customBtn secondaryCustomBtn mt-5"
-              disabled={!formik.isValid || userPlaylists.length == 0}
+              disabled={!formik.isValid || userPlaylists.length === 0}
             >
               Add
             </button>
@@ -178,7 +174,7 @@ export default function AddTrack() {
                 formik.errors.playlist}
             </small>
             <small className="createPlaylist__error">
-              {userPlaylists.length == 0 &&
+              {userPlaylists.length === 0 &&
                 "You Should have 1 playlist at least"}
             </small>
             {/* {progress && (

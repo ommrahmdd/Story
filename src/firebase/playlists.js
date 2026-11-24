@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import {
   addDoc,
   arrayRemove,
@@ -6,7 +5,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  Firestore,
   getDoc,
   getDocs,
   query,
@@ -114,7 +112,7 @@ export let addNewComment = async (trackId, newComment) => {
 // HANDLE: update Playlist
 export let updatePlaylist = async (playlist_id, data) => {
   let docRef = doc(db, "playlists", playlist_id);
-  let updated = await updateDoc(docRef, data);
+  await updateDoc(docRef, data);
 };
 
 // HANDLE: delete track from playlist

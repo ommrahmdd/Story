@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./signup.css";
 import { signup } from "../../firebase/users";
 export default function Signup() {
@@ -22,7 +22,7 @@ export default function Signup() {
     if (!values.confrimPassword) {
       erros.password = "*Confrim Password is required";
     }
-    if (values.password != values.confrimPassword) {
+    if (values.password !== values.confrimPassword) {
       erros.confrimPassword = "Passwords are not the same";
     }
     return erros;
@@ -43,8 +43,8 @@ export default function Signup() {
           window.location.reload();
         })
         .catch((err) => {
-          if (err.code == "auth/wrong-password") setError("Wrong Password");
-          else if (err.code == "auth/wrong-email") setError("Wrong Email");
+          if (err.code === "auth/wrong-password") setError("Wrong Password");
+          else if (err.code === "auth/wrong-email") setError("Wrong Email");
           setTimeout(() => {
             setError("");
           }, 2000);

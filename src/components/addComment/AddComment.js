@@ -1,6 +1,4 @@
-import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase/config";
 import { addNewComment } from "../../firebase/playlists";
 import { getUserById } from "../../firebase/users";
 import "./addComment.css";

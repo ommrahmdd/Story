@@ -7,7 +7,11 @@ export default function Footer() {
       <div className="row">
         <div className="col-md-3 d-flex justify-content-center align-items-center footer__first mb-md-1 mb-5">
           <span>ST</span>
-          <img src={require("./../../assest/bat-mid.png")} className="w-5" />
+          <img
+            src={require("./../../assest/bat-mid.png")}
+            className="w-5"
+            alt=""
+          />
           <span>RY</span>
         </div>
         <div className="col-md-3 d-flex flex-column align-items-center footer__second mb-md-1 mb-5">

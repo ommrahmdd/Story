@@ -1,5 +1,3 @@
-import { async } from "@firebase/util";
-import { onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AddComment from "../../components/addComment/AddComment";
@@ -10,7 +8,6 @@ import {
   addRmoveTrackFromFav,
   getUserById,
   removePlaylistFromFav,
-  userRef,
 } from "../../firebase/users";
 import "./tracks.css";
 export default function Tracks() {
@@ -40,15 +37,13 @@ export default function Tracks() {
   useEffect(() => {
     getUserById(localStorage.getItem("uID")).then((data) => {
       setCurrentUser(data);
-      data.fav_playlist.some((fav) => {
-        if (fav == params) {
-          setFavPlaylist(true);
-        }
-      });
+      if (data.fav_playlist.some((fav) => fav === params)) {
+        setFavPlaylist(true);
+      }
     });
     getPlaylistById(params).then((data) => {
       setPlaylist(data);
-      data.tracks.map((trackID) => {
+      data.tracks.forEach((trackID) => {
         getTracksByID(trackID).then((track, index) => {
           setTracks((prevState) => {
             return [...prevState, track];
@@ -56,7 +51,7 @@ export default function Tracks() {
         });
       });
     });
-  }, []);
+  }, [params]);
 
   let handlePausePlay = (e) => {
     setPausePlay(!pausePlay);
@@ -73,7 +68,7 @@ export default function Tracks() {
         duration: duration.toFixed(0),
       };
     });
-    if (audioProgress.progress == 100) {
+    if (Number(audioProgress.progress) === 100) {
       setPausePlay(!pausePlay);
     }
   };
@@ -103,7 +98,7 @@ export default function Tracks() {
       setCurrentUser(data);
     });
     let result = currentUser.fav_tracks?.find((track) => {
-      return track == tracks[index].track_ID;
+      return track === tracks[index].track_ID;
     });
     if (result) setFavTrack(true);
     else setFavTrack(false);
@@ -209,10 +204,10 @@ export default function Tracks() {
                 {/* HANDLE: audio time */}
                 <div className="w-100 d-flex align-items-center justify-content-between">
                   <span className="fs-4">
-                    {durCurrent != "aN:aN" ? durCurrent : "00:00"}
+                    {durCurrent !== "aN:aN" ? durCurrent : "00:00"}
                   </span>
                   <span className="fs-4">
-                    {durFull != "aN:aN" ? durFull : "00:00"}
+                    {durFull !== "aN:aN" ? durFull : "00:00"}
                   </span>
                 </div>
                 {/* HANDLE: controls */}

@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/config";
 import { logout } from "../../firebase/users";
@@ -10,7 +10,7 @@ export default function Nav() {
   let menuRef = React.createRef();
   let history = useHistory();
   onAuthStateChanged(auth, (user) => {
-    if (user != "null" || user != null) setUserId(localStorage.getItem("uID"));
+    if (user !== "null" && user !== null) setUserId(localStorage.getItem("uID"));
     else setUserId("");
   });
   let handleMenuClose = () => {
@@ -31,6 +31,7 @@ export default function Nav() {
                   <img
                     src={require("./../../assest/bat-mid.png")}
                     className=" customNav__logo-img"
+                    alt=""
                   />
                 </span>
                 RY

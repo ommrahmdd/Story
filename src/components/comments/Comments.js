@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import "./comments.css";
 export default function Comments({ trackId }) {
   let stars = new Array(5).fill(0);
-  let [rateValue, setRateValue] = useState(0);
   let [comments, setComments] = useState([]);
   //HANDLE: subscribe the comments;
   useEffect(() => {

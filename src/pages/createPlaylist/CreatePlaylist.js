@@ -1,12 +1,11 @@
 import React from "react";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "../../firebase/config";
+import { storage } from "../../firebase/config";
 import { v4 } from "uuid";
 import { useParams } from "react-router-dom";
 import "./createPlaylist.css";
-import { addDoc, collection } from "firebase/firestore";
 import { addPlaylist } from "../../firebase/playlists";
 import { useHistory } from "react-router-dom";
 export default function CreatePlaylist() {
@@ -56,7 +55,7 @@ export default function CreatePlaylist() {
       <div className="col-md-8">
         <div className="d-flex flex-column mt-5 ">
           {/* <img src={require("./../../assest/bat-mid.png")} className=" my-5" /> */}
-          <h3 className="createPlaylist___header"></h3>
+          <div className="createPlaylist___header"></div>
           <form
             className="w-50 mt-5 createPlaylist__form"
             onSubmit={(e) => {

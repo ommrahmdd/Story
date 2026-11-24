@@ -32,8 +32,8 @@ export default function Login() {
           console.log(data);
         })
         .catch((err) => {
-          if (err.code == "auth/wrong-password") setError("Wrong Password");
-          else if (err.code == "auth/wrong-email") setError("Wrong Email");
+          if (err.code === "auth/wrong-password") setError("Wrong Password");
+          else if (err.code === "auth/wrong-email") setError("Wrong Email");
           setTimeout(() => {
             setError("");
           }, 2000);

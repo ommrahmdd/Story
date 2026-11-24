@@ -4,31 +4,25 @@ import { useHistory, useParams } from "react-router-dom";
 import "./../createPlaylist/createPlaylist.css";
 import "swiper/css";
 import "./favorites.css";
-import { getUserById, getUserFav } from "../../firebase/users";
+import { getUserFav } from "../../firebase/users";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  getPlaylistById,
-  getTracksByID,
-  getUserPlaylists,
-} from "../../firebase/playlists";
+import { getPlaylistById, getTracksByID } from "../../firebase/playlists";
 export default function Favorites() {
-  let [user, setUser] = useState({});
   let [playlists, setPlaylists] = useState([]);
   let [tracks, setTracks] = useState([]);
   let { userId } = useParams();
   let history = useHistory();
   // HANDLE: effect
   useEffect(() => {
-    getUserById(userId).then((data) => setUser(data));
     getUserFav(userId).then((data) => {
-      data.fav_playlist.map((playlist) => {
+      data.fav_playlist.forEach((playlist) => {
         getPlaylistById(playlist).then((playlistData) => {
           setPlaylists((prevState) => {
             return [...prevState, playlistData];
           });
         });
       });
-      data.fav_tracks.map((trackID) => {
+      data.fav_tracks.forEach((trackID) => {
         getTracksByID(trackID).then((track) => {
           console.log(track);
           setTracks((prevState) => {
@@ -37,7 +31,7 @@ export default function Favorites() {
         });
       });
     });
-  }, []);
+  }, [userId]);
   // HANDLE: playlist click
   let handlePlaylist = (id) => {
     history.push(`/${id}/tracks`);
@@ -59,7 +53,7 @@ export default function Favorites() {
         {/* HANDLE: playlists */}
         <div className="mb-5">
           <h3>Favorite Playlists</h3>
-          {playlists.length != 0 ? (
+          {playlists.length !== 0 ? (
             <Swiper
               slidesPerView={4}
               centeredSlides={true}
@@ -72,7 +66,7 @@ export default function Favorites() {
                   key={index}
                   onClick={() => handlePlaylist(playlist.playlist_ID)}
                 >
-                  <img src={playlist.image} />
+                  <img src={playlist.image} alt={playlist.name} />
                   <p>{playlist.name}</p>
                 </SwiperSlide>
               ))}
@@ -93,7 +87,7 @@ export default function Favorites() {
         <div className="mb-5">
           <h3 className="mb-5">Favorite Tracks</h3>
           <div className="d-flex flex-column align-items-start">
-            {tracks.length != 0 ? (
+            {tracks.length !== 0 ? (
               tracks?.map((track, index) => (
                 <div
                   className="d-flex align-items-center track__box"

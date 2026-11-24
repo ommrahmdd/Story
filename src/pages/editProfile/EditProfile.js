@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { getTracksByID, getUserPlaylists } from "./../../firebase/playlists";
+import { getUserPlaylists } from "./../../firebase/playlists";
 import "./editProfile.css";
 export default function EditProfile() {
   let [playlists, setPlaylists] = useState([]);
-  let [tracks, setTracks] = useState([]);
   let { id } = useParams();
   let history = useHistory();
   useEffect(() => {
     getUserPlaylists(id).then((data) => {
       setPlaylists(data);
-      data.forEach((playlist) => {
-        playlist.tracks?.forEach((trackId) => {
-          getTracksByID(trackId).then((track) => {
-            setTracks((prevState) => {
-              return [...prevState, track];
-            });
-          });
-        });
-      });
     });
-  }, []);
+  }, [id]);
   return (
     <div className="editProfile row">
       <div className="col-md-2"></div>
@@ -39,7 +29,7 @@ export default function EditProfile() {
                 <p className="position-absolute numbering__box">
                   {index + 1 < 10 ? `0${index + 1}` : index + 1}
                 </p>
-                <img src={playlist.image} />
+                <img src={playlist.image} alt={playlist.name} />
                 <div>
                   <h4>{playlist.name}</h4>
                   <p>{playlist.tracks?.length} track</p>

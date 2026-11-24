@@ -24,11 +24,11 @@ export default function Home() {
     switch (selectValue) {
       case "track": {
         playlists.length > 0 &&
-          playlists.map((playlistSearch) => {
-            playlistSearch.tracks?.map((track_id) => {
+          playlists.forEach((playlistSearch) => {
+            playlistSearch.tracks?.forEach((track_id) => {
               getTracksByID(track_id).then((track) => {
                 if (
-                  track.name.toLowerCase().indexOf(searchValue.toLowerCase()) !=
+                  track.name.toLowerCase().indexOf(searchValue.toLowerCase()) !==
                   -1
                 ) {
                   console.log(playlistSearch);
@@ -46,6 +46,7 @@ export default function Home() {
               });
             });
           });
+        break;
       }
       case "all": {
         setTracks([]);
@@ -53,20 +54,24 @@ export default function Home() {
           console.log(tracks);
           setPlaylists(data);
         });
+        break;
       }
       case "playlist": {
         playlists.length > 0 &&
-          playlists.map((playlistSearch) => {
+          playlists.forEach((playlistSearch) => {
             if (
               playlistSearch.name
                 .toLowerCase()
-                .indexOf(searchValue.toLowerCase()) != -1
+                .indexOf(searchValue.toLowerCase()) !== -1
             )
               setPlaylists((prevState) => {
                 return [...prevState, playlistSearch];
               });
           });
+        break;
       }
+      default:
+        break;
     }
   };
   let handleSearchInput = (e) => {
@@ -100,7 +105,7 @@ export default function Home() {
           list="searchDataList"
         />
         <datalist id="searchDataList">
-          {selectValue == "playlist"
+          {selectValue === "playlist"
             ? playlists?.map((playlist, index) => {
                 console.log(playlist.name);
                 return (
@@ -129,8 +134,8 @@ export default function Home() {
         </button>
       </div>
       {/* HANDLE: playlist view */}
-      {playlists?.length != 0 ? (
-        tracks.length != 0 ? (
+      {playlists?.length !== 0 ? (
+        tracks.length !== 0 ? (
           <div className="container py-5">
             <div className="row g-4 gy-5">
               {tracks.map((track, index) => (
@@ -178,7 +183,7 @@ export default function Home() {
                     <p className="customCard__number">
                       {index < 10 ? `0${index + 1}` : index + 1}
                     </p>
-                    <img src={playlist.image} />
+                    <img src={playlist.image} alt={playlist.name} />
                     <p className="customCard__name">{playlist.name}</p>
                     <span>
                       {playlist.tracks?.length

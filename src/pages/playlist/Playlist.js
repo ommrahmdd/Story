@@ -14,13 +14,12 @@ export default function Playlist() {
   let [playlist, setPlaylist] = useState({});
   let [tracks, setTracks] = useState([]);
   let [playlistName, setPlaylistName] = useState("");
-  let [updateResponse, setUpdateResponse] = useState(false);
   let history = useHistory();
   useEffect(() => {
     getPlaylistById(playlistId).then((data) => {
       setPlaylist(data);
       setPlaylistName(data.name);
-      data.tracks?.map((trackID) => {
+      data.tracks?.forEach((trackID) => {
         getTracksByID(trackID).then((track) => {
           console.log(track);
           setTracks((prevState) => {
@@ -29,7 +28,7 @@ export default function Playlist() {
         });
       });
     });
-  }, []);
+  }, [playlistId]);
   let handleDeleteTrack = (index, track_id) => {
     toast(
       (t) => (
@@ -50,7 +49,6 @@ export default function Playlist() {
           <button
             className="fs-5 mt-2"
             onClick={() => {
-              setUpdateResponse(false);
               toast.dismiss(t.id);
             }}
           >
@@ -116,7 +114,11 @@ export default function Playlist() {
   return (
     <div className="row playlist">
       <div className="col-md-4 d-flex justify-items-center flex-column align-items-center playlist__left">
-        <img src={playlist.image} className="mb-md-2 mb-4" />
+        <img
+          src={playlist.image}
+          className="mb-md-2 mb-4"
+          alt={playlist.name}
+        />
         <button className="customBtn primaryBtn" onClick={handleDeletePlaylist}>
           Delete Playlist
         </button>

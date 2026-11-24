@@ -19,7 +19,7 @@ export default function Profile() {
         setPlaylists(playData);
       });
     });
-  }, []);
+  }, [id]);
   return (
     <div className="row createPlaylist">
       {/* HANDLE: left */}
@@ -62,7 +62,7 @@ export default function Profile() {
             >
               {playlists.map((playlist, index) => (
                 <SwiperSlide key={index}>
-                  <img src={playlist.image} />
+                  <img src={playlist.image} alt={playlist.name} />
                   <p className="fs-3">{playlist.name}</p>
                   <span>
                     {playlist.tracks?.length > 0

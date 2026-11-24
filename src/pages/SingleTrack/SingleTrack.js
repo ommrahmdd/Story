@@ -12,7 +12,6 @@ export default function SingleTrack() {
   let [playing, setPlaying] = useState(false);
   let [progress, setProgress] = useState({});
   let [favTracks, setFavTracks] = useState([]);
-  let [repeat, setRepeat] = useState(localStorage.getItem("repeat") || false);
   let audioRef = React.createRef();
   let customAudioRef = React.createRef();
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function SingleTrack() {
       setCurrentTrack(data);
     });
     getUserById(userId).then((user) => {
-      user.fav_tracks?.map((trackID) => {
+      user.fav_tracks?.forEach((trackID) => {
         getTracksByID(trackID).then((track) => {
           setFavTracks((prevState) => {
             return [...prevState, track];
@@ -29,7 +28,7 @@ export default function SingleTrack() {
         });
       });
     });
-  }, []);
+  }, [trackId, userId]);
 
   // HANDLE: play button
   let handlePLay = () => {
@@ -46,7 +45,7 @@ export default function SingleTrack() {
     let currentTime = audioRef.current.currentTime;
     let duration = audioRef.current.duration;
 
-    if (audioRef.current.currentTime == duration) {
+    if (audioRef.current.currentTime === duration) {
       setPlaying(false);
       setProgress({});
       audioRef.current.currentTime = 0;
@@ -141,7 +140,7 @@ export default function SingleTrack() {
         </div>
         {/* HANDLE: The remain tracks in favorites */}
         <div className="d-flex flex-column align-items-center pb-5">
-          {favTracks.length != 0 ? (
+          {favTracks.length !== 0 ? (
             favTracks?.map((track, index) =>
               track.track_ID === currentTrack?.track_ID ? (
                 <div
